@@ -1,15 +1,26 @@
+const Accounts = require('./accounts-model')
 const router = require('express').Router()
+const md = require('./accounts-middleware')
+router.get('/', async (req, res, next) => {
+  
+  try{
+    const accounts = await Accounts.getAll();
+    res.json(accounts)
+  } catch (err){
 
-router.get('/', (req, res, next) => {
-  // DO YOUR MAGIC
+  }
 })
 
-router.get('/:id', (req, res, next) => {
-  // DO YOUR MAGIC
+router.get('/:id',md.checkAccountId, async (req, res, next) => {
+  res.json(req.account)
 })
 
-router.post('/', (req, res, next) => {
-  // DO YOUR MAGIC
+router.post('/', async (req, res, next) => {
+  try{
+    const newAccount = await Accounts.create(req.body)
+  } catch(err){
+
+  }
 })
 
 router.put('/:id', (req, res, next) => {
